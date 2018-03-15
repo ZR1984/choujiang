@@ -1,0 +1,73 @@
+/* index页面 */
+
+.parent_box{
+  position: relative;
+  overflow: hidden;
+}
+.choujiang_btn{
+  position: absolute;
+  left:50%;
+  bottom:30%;
+  /* margin:auto; */
+  z-index:999;
+  transform: translate(-50%,0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:70%;
+}
+
+.three_pic{
+  position: relative;
+  left:3%;
+}
+.one_pic{
+  position: relative;
+}
+
+.choujiang_btn .two_pic{
+  position: relative;
+  right:4%;
+}
+
+.index_begin{
+  position: absolute;
+  bottom:10%;
+  left:50%;
+  transform: translate(-50%,0);
+  width:100%;
+}
+
+.index_begin img{
+  /* display: none; */
+  width:40%;
+}
+.zj_haoma{
+  display: none;
+  color:#ffea97;
+  font-size:24px;
+}
+
+.background_light{
+  position: absolute;
+  top:-2%;
+  left:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.right_light{
+  transform-origin: top right;
+  -webkit-animation: right_light_rotate 2s infinite alternate forwards; 
+  -o-animation: right_light_rotate 2s infinite alternate forwards;
+  -moz-animation: right_light_rotate 2s infinite alternate forwards;
+  animation: right_light_rotate 2s infinite alternate forwards;
+}
+
+.left_light{
+  transform-origin: top left;
+  -webkit-animation: left_light_rotate 2s infinite alternate none; 
+  -o-animation: left_light_rotate 2s infinite alternate none;
+  -moz-animation: left_light_rotate 2s infinite alternate none;
+  animation: left_light_rotate 2s infinite alternate none;
+}

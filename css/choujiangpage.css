@@ -1,0 +1,139 @@
+.parent_box{
+    position: relative;
+    overflow: hidden;
+}
+
+.luohuayu{
+    position: absolute;
+    top:-66%;
+    left:0;
+}
+
+.qiqiu1,.qiqiu2,.qiqiu3{
+    position: absolute;
+}
+.qiqiu1{
+    left:25%;
+    top:1%;
+}
+.qiqiu2{
+    left:30%;
+    top:25%;
+}
+.qiqiu3{
+    left:60%;
+    top:2%;
+}
+.laohuji{
+    position: absolute;
+    bottom: 0;
+    left:50%;
+    transform: translate(-50%,0);
+    z-index: 1;
+    width:45%;
+}
+
+.laohuji_btn{
+    position: absolute;
+    bottom: 30%;
+    left:50%;
+    transform: translate(-50%,0);
+}
+
+.tel_list{
+    position: absolute;
+    top:32%;
+    left:50%;
+    transform: translate(-50%,0);
+    width: 67%;
+    height: 19%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.tel_list_show{
+    font-size:36px;
+    letter-spacing: 3px;
+}
+
+.red_color_font{
+    color:#bc0300;
+}
+
+.black_color_font{
+    color:#333;
+}
+
+.shade_outerBox{
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.7);
+    z-index:9999;
+}
+
+.shade_innerBox{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width:40%;
+    z-index: 1;
+}
+
+.shade_text{
+    position:absolute;
+    bottom:10%;
+    left:50%;
+    transform: translate(-50%,0);
+    font-size:20px;
+    color:#eb040d;
+    font-weight: 500;
+}
+
+.shade_btn{
+    position:absolute;
+    bottom:-20%;
+    left:50%;
+    transform: translate(-50%,0);
+}
+
+.shade_caidai_da,.shade_caidai_xiao{
+    position:absolute;
+    top:-15%;
+    left:50%;
+    transform: translate(-50%,0);
+    width:100%;
+}
+
+.shade_caidai_da{
+    -webkit-animation: dacaidai 1s infinite alternate; 
+  -o-animation: dacaidai 1s infinite alternate;
+  -moz-animation: dacaidai 1s infinite alternate;
+    animation: dacaidai 1s infinite alternate;
+}
+.shade_caidai_xiao{
+    -webkit-animation: xiaocaidai 1s infinite alternate; 
+  -o-animation: xiaocaidai 1s infinite alternate;
+  -moz-animation: xiaocaidai 1s infinite alternate;
+    animation: xiaocaidai 1s infinite alternate;
+}
+
+#list_li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* transform: translate(-50%); */
+    text-align: center;
+}
+
+#list_li li {
+    font-size: 24px;
+    
+} 

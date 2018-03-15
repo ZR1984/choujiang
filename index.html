@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>index</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/public.css">
+  <link rel="stylesheet" href="./css/all.css">
+  <link rel="stylesheet" href="./css/indexAnimation.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 parent_box">
+        <div class="bgpic_box">
+          <img src="./imgs/background.jpg" alt="">
+        </div>
+        <div class="choujiang_btn">
+          <div class="three_pic">
+            <img src="./imgs/three.png" alt="三等奖">
+            <div class="index_begin text-center">
+              <img id="three_btn" src="./imgs/button.png" alt="">
+              <span class="zj_haoma">13511112222</span>
+            </div>
+          </div>
+          <div class="one_pic">
+            <img src="./imgs/one.png" alt="一等奖">
+            <div class="index_begin text-center">
+              <img id="one_btn" src="./imgs/button.png" alt="">
+              <span class="zj_haoma">13511112222</span>
+            </div>
+          </div>
+          <div class="two_pic">
+            <img src="./imgs/two.png" alt="二等奖">
+            <div class="index_begin text-center">
+              <img id="two_btn" src="./imgs/button.png" alt="">
+              <span class="zj_haoma">13511112222</span>
+            </div>
+          </div>
+        </div>
+        <div class="background_light">
+          <div class="left_light">
+            <img src="./imgs/left_light.png" alt="左边射灯">
+          </div>
+          <div class="right_light">
+            <img src="./imgs/right_light.png" alt="右边射灯">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const oneBtn = document.getElementById("one_btn")
+    ,twoBtn=document.getElementById("two_btn")
+    ,threeBtn=document.getElementById("three_btn");
+
+    oneBtn.addEventListener("click",()=>{
+      window.location.href = `./choujiangpage.html?id=1`;
+    });
+    twoBtn.addEventListener("click",()=>{
+      window.location.href = `./choujiangpage.html?id=2`;
+    });
+    threeBtn.addEventListener("click",()=>{
+      window.location.href = `./choujiangpage.html?id=3`;
+    });
+    </script>
+</body>
+
+</html>

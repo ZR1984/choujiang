@@ -1,0 +1,71 @@
+@keyframes right_light_rotate{
+    0%{
+      transform:rotate(-10deg)
+    }
+    100%{
+      transform:rotate(50deg)
+    }
+  }
+  
+  @-webkit-keyframes right_light_rotate{
+    0%{
+      transform:rotate(-10deg)
+    }
+    100%{
+      transform:rotate(50deg)
+    }
+  }
+  
+  @-o-keyframes right_light_rotate{
+    0%{
+      transform:rotate(-10deg)
+    }
+    100%{
+      transform:rotate(50deg)
+    }
+  }
+  
+  @-moz-keyframes right_light_rotate{
+    0%{
+      transform:rotate(-10deg)
+    }
+    100%{
+      transform:rotate(50deg)
+    }
+  }
+  
+  @keyframes left_light_rotate{
+    0%{
+      transform:rotate(-50deg)
+    }
+    100%{
+      transform:rotate(10deg)
+    }
+  }
+  
+  @-webkit-keyframes left_light_rotate{
+    0%{
+      transform:rotate(-50deg)
+    }
+    100%{
+      transform:rotate(10deg)
+    }
+  }
+  
+  @-o-keyframes left_light_rotate{
+    0%{
+      transform:rotate(-50deg)
+    }
+    100%{
+      transform:rotate(10deg)
+    }
+  }
+  
+  @-moz-keyframes left_light_rotate{
+    0%{
+      transform:rotate(-50deg)
+    }
+    100%{
+      transform:rotate(10deg)
+    }
+  }
