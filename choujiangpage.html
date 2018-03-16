@@ -47,7 +47,7 @@
                         <img src="./imgs/page2/begin.png" alt="">
                     </div>
                     <div class="tel_list text-center">
-                        <!-- <span class="tel_list_show red_color_font">135-9998-8797</span> -->
+                        <span id='grade' class="tel_list_show red_color_font">一等奖</span>
                         <div id="list_li">
                             <ul></ul>
                         </div>
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="shade_outerBox">
+        <div id="shade_outerBox" class="shade_outerBox">
             <div class="shade_innerBox">
                 <div class="shade_caidai_da">
                     <img src="./imgs/page2/caidaida.png" alt="">
@@ -63,14 +63,12 @@
                 <div class="shade_caidai_xiao">
                     <img src="./imgs/page2/caidaixiao.png" alt="">
                 </div>
-                <div class="shade_bgpic">
+                <div id="shade_bgpic" class="shade_bgpic">
                     <img src="./imgs/page2/zhongjiang_1.png" alt="">
                 </div>
-                <div class="shade_text">
-                    恭喜
-                    <span>13594177896</span>获得一等奖
+                <div id="shade_text" class="shade_text">
                 </div>
-                <div class="shade_btn">
+                <div id="shade_close" class="shade_btn">
                     <img src="./imgs/page2/close_btn.png" alt="">
                 </div>
             </div>
@@ -79,8 +77,142 @@
     <script src="./js/jquery-3.2.1.min.js"></script>
     <script src="./js/TweenMax.min.js"></script>
     <script>
+        const grade = {
+            1: '一等奖',
+            2: '二等奖',
+            3: '三等奖'
+        }
+        // 获取页面参数
+        const req = GetRequest();
+        const winnerId = req['id'];
+        // 根据页面参数显示抽奖的等级
+        const gradeText = grade[winnerId]
+        $('#grade').html(gradeText)
+        // 请求获奖者和参与者的电话号码数据
+        const winnerData = getData('./data/winnerData.json')
+        const phoneData  = getData('./data/phoneData.json')
+        let telList, btnState = 1;
+        let winner = null;
+
+        Promise.all([winnerData,phoneData]).then(function ([winnerObj,phoneArr]) {
+            console.log(winnerObj)
+            console.log(phoneArr)
+            if(winnerId){
+                winner = winnerObj[winnerId]
+                phoneArr.push(winner)
+            }
+            console.log(phoneArr)
+            if(!(phoneArr.indexOf(winner) === phoneArr.length-1)){
+                alert('数据出错')
+            }else{
+                telList = phoneArr
+            }
+
+        }).catch(function(reason){
+            alert(reason)
+        });
+        
+        //气球动画       
+        TweenMax.fromTo(".qiqiu1", 3, { rotationZ: -30, transformOrigin: "left top" }, { rotationZ: 30, repeat: -1, yoyo: true })
+        TweenMax.fromTo(".qiqiu2", 3, { rotationZ: -30, transformOrigin: "left top" }, { rotationZ: 30, repeat: -1, yoyo: true })
+        TweenMax.fromTo(".qiqiu3", 3, { rotationZ: -30, transformOrigin: "right top" }, { rotationZ: 30, repeat: -1, yoyo: true })
+        //掉落的卡片动画
+        let index = -66;
+        TweenMax.to('#luohuayu',5,{
+            top: 0,
+            repeat: -1,
+            ease: Power0.easeNone
+        })
+        
+        //开奖按钮
+        const laoHuJiBtn = $("#laohuji_btn");
+        const tl = window.tl= new TimelineLite();
+        const textSpan=$("#text_span");
+        const shade=$("#shade_outerBox");
+        const shadeBtn=$("#shade_close");
+        const shadeTex=$("#shade_text");
+        const shadeBgpic=$("#shade_bgpic");
+
+        let progress = 0.6;
+        laoHuJiBtn.on("click", function () {
+            if (!telList) {alert("数据不存在")};
+            //隐藏开奖等级文字
+            $('#grade').html('')
+
+            const telListDom = $('#list_li').children('ul');
+            const tellistBox = $('.tel_list');
+            const heightNum = tellistBox.height();
+            const liDomHeight = tellistBox.css('height');
+            const timeOverLi = 0.2;
+            const len = telList.length;
+            const ylen = -(len-1) * heightNum;
+            switch (btnState) {
+                case 1:
+                    btnState++;
+                    $(this).children("img").attr("src", "./imgs/page2/stop.png");
+                    //增加li
+                    let liDom = '';
+                    telList.forEach((tel) => {
+                        liDom += `<li style="height:${liDomHeight}; line-height:${liDomHeight}" class="tel_list_show red_color_font">${tel}</li>`
+                    })
+                    telListDom.html(liDom)
+                    //一等奖等文字隐藏
+                    textSpan.hide();
+                    //滚动
+                    tl.to('#list_li', len*timeOverLi, {
+                        y: ylen,
+                        ease: Power2.easeInOut,
+                        onUpdate:update,
+                        onComplete:complete
+                    })
+                    break;
+                case 2:
+                    //减速动画
+                    btnState++;
+                    progress = 2;
+                    tl.progress(0.8)
+                    break;
+
+            }
+        });
+
+        //遮罩层关闭按钮返回首页
+        shadeBtn.on("click",function(){
+            window.location.href = `./index.html?num=${winner}&wId=${winnerId}`;
+        });
+
+        function update(){
+            if(tl.progress()>progress){
+                tl.progress(0.4) 
+            }
+        }
+
+        function complete(){
+            //显示遮罩层，确定抽奖的结果，返回给服务器或者传值到上个页面
+            TweenMax.set('.shade_outerBox',0,{opacity:0})
+            $('.shade_outerBox').show()
+            TweenMax.fromTo('.shade_outerBox',1,{scale:0.1},{opacity:1,scale:1})
+            shadeTex.html(`恭喜${winner}获得一等奖`);
+            shadeBgpic.children("img").attr("src",`./imgs/page2/zhongjiang_${winnerId}.png`);
+        }
+
+        function getData(url){
+            return new Promise((resolve,reject)=>{
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    success(result) {
+                        resolve(result.data);
+                    },
+                    error() {
+                        reject(`${url}数据下载失败`)
+                    }
+                });
+            })
+        }
+
         function GetRequest() {
-            var url = location.search; //获取url中"?"符后的字串
+            var url = location.search;
             var theRequest = new Object();
             if (url.indexOf("?") != -1) {
                 var str = url.substr(1);
@@ -91,79 +223,6 @@
             }
             return theRequest;
         }
-
-        let telList, btnState = 1;
-        $.ajax({
-            url: "./data/data.json",
-            type: "get",
-            success(data) {
-                telList = data.tel;
-            },
-            error() {
-                console.log("tel请求失败");
-            }
-        });
-
-        const req = GetRequest();
-        let index_1 = req['id'];
-
-        let index = -66;
-        const luoHuaYu = $("#luohuayu")
-            , laoHuJiBtn = $("#laohuji_btn");
-
-        TweenMax.fromTo(".qiqiu1", 3, { rotationZ: -30, transformOrigin: "left top" }, { rotationZ: 30, repeat: -1, yoyo: true })
-        TweenMax.fromTo(".qiqiu2", 3, { rotationZ: -30, transformOrigin: "left top" }, { rotationZ: 30, repeat: -1, yoyo: true })
-        TweenMax.fromTo(".qiqiu3", 3, { rotationZ: -30, transformOrigin: "right top" }, { rotationZ: 30, repeat: -1, yoyo: true })
-
-        // setInterval(()=>{
-        //     luoHuaYu.css("top",`${index++}%`);
-        //     if(index>0){
-        //         index = -66
-        //     }
-        // },1000/30);
-
-        const tl = new TimelineLite();
-        const telListDom = $('#list_li').children('ul');
-        const tellistBox = $('.tel_list');
-        const height = tellistBox.css('height')
-        
-        const timeOverLi = 1;
-        // tl.to(".green", 1, {x:550})
-        // .to(".blue", 1, {x:550})
-        // .to(".orange", 1, {x:550})
-        laoHuJiBtn.on("click", function () {
-            if (!telList) return;
-            const len = telList.length;
-            const ylen = -len * height;
-            const obj = {a:ylen}
-            switch (btnState) {
-                case 1:
-                    btnState++;
-                    $(this).children("img").attr("src", "./imgs/page2/stop.png");
-                    //增加li
-                    let liDom = '';
-                    telList.forEach((tel) => {
-                        liDom += `<li style="height:${height}; line-height:${height}" class="tel_list_show red_color_font">${tel}</li>`
-                    })
-                    telListDom.html(liDom)
-                    //滾動
-                    TweenMax.to('#list_li', len*timeOverLi, {
-                        y: -1000,
-                        repeat: -1,
-                        ease: '',
-                    })
-                    break;
-                case 2:
-                    //减速动画
-                    btnState++;
-                    // alert('2')
-                    break;
-
-            }
-        });
-
-
-
     </script>
 </body>
 
