@@ -32,9 +32,9 @@
 
 .index_begin{
   position: absolute;
-  bottom:10%;
+  bottom:17%;
   left:50%;
-  transform: translate(-50%,0);
+  transform: translate(-50%,50%);
   width:100%;
 }
 

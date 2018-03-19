@@ -73,6 +73,9 @@
                 </div>
             </div>
         </div>
+        <div class="goBack">
+            <a href="index.html">返回</a>
+        </div>
     </div>
     <script src="./js/jquery-3.2.1.min.js"></script>
     <script src="./js/TweenMax.min.js"></script>
@@ -81,7 +84,7 @@
             1: '一等奖',
             2: '二等奖',
             3: '三等奖'
-        }
+        };
         // 获取页面参数
         const req = GetRequest();
         const winnerId = req['id'];
@@ -95,13 +98,13 @@
         let winner = null;
 
         Promise.all([winnerData, phoneData]).then(function ([winnerObj, phoneArr]) {
-            console.log(winnerObj)
-            console.log(phoneArr)
+            // console.log(winnerObj)
+            // console.log(phoneArr)
             if (winnerId) {
                 winner = winnerObj[winnerId]
                 phoneArr.push(winner)
             }
-            console.log(phoneArr)
+            // console.log(phoneArr)
             if (!(phoneArr.indexOf(winner) === phoneArr.length - 1)) {
                 alert('数据出错')
             } else {
@@ -143,7 +146,8 @@
             const tellistBox = $('.tel_list');
             const heightNum = tellistBox.height();
             const liDomHeight = tellistBox.css('height');
-            const timeOverLi = 0.2;
+            // const timeOverLi = 0.1;
+            let timeOverLi=0.25;
             const len = telList.length;
             const ylen = -(len - 1) * heightNum;
             switch (btnState) {
@@ -161,7 +165,9 @@
                     //滚动
                     tl.to('#list_li', len * timeOverLi, {
                         y: ylen,
-                        ease: Power1.easeInOut,
+                        // ease: Sine.easeIn,
+                        // ease:Sine.easeInOut,
+                        ease:Power0.easeNone,
                         onUpdate: update,
                         onComplete: complete
                     })
@@ -172,8 +178,9 @@
                 case 3:
                     //减速动画
                     btnState++;
+                    timeOverLi=0.03;
                     progress = 2;
-                    tl.progress(0.8)
+                    tl.progress(1);
                     break;
             }
         });
@@ -186,16 +193,19 @@
         function update() {
             if (tl.progress() > progress) {
                 tl.progress(0.4)
+                // tl.progress(4);
             }
         }
 
         function complete() {
             //显示遮罩层，确定抽奖的结果，返回给服务器或者传值到上个页面
-            TweenMax.set('.shade_outerBox', 0, { opacity: 0 })
+            setTimeout(function(){
+                TweenMax.set('.shade_outerBox', 0, { opacity: 0 })
             $('.shade_outerBox').show()
             TweenMax.fromTo('.shade_outerBox', 1, { scale: 0.1 }, { opacity: 1, scale: 1 })
             shadeTex.html(`恭喜${winner}获得一等奖`);
             shadeBgpic.children("img").attr("src", `./imgs/page2/zhongjiang_${winnerId}.png`);
+            },1500);
         }
 
         function getData(url) {

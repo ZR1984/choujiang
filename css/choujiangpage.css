@@ -136,3 +136,9 @@
 #list_li li {
     font-size: 54px;    
 } 
+
+.goBack{
+    position: absolute;
+    left:20%;
+    top:20%;
+}

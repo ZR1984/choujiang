@@ -23,22 +23,34 @@
           <div class="three_pic">
             <img src="./imgs/three.png" alt="三等奖">
             <div class="index_begin text-center">
-              <img id="three_btn"  class="zjh3_btn" src="./imgs/button.png" alt="">
-              <span class="zj_haoma zjh3">13511112222</span>
+              <img id="three_btn" class="zjh3_btn" src="./imgs/button.png" alt="">
+              <!-- <span class="zj_haoma zjh3">13511112222</span> -->
+              <div class="zj_haoma">
+                <p class="zjh3">13511112222</p>
+                <img id="chongxinchouyang3_btn" src="./imgs/chongxinchoujiang.png" alt="重新抽奖">
+              </div>
             </div>
           </div>
           <div class="one_pic">
             <img src="./imgs/one.png" alt="一等奖">
             <div class="index_begin text-center">
               <img id="one_btn" class="zjh1_btn" src="./imgs/button.png" alt="">
-              <span class="zj_haoma zjh1">13511112222</span>
+              <!-- <span class="zj_haoma zjh1">13511112222</span> -->
+              <div class="zj_haoma">
+                <p class="zjh1">13511112222</p>
+                <img id="chongxinchouyang1_btn" src="./imgs/chongxinchoujiang.png" alt="重新抽奖">
+              </div>
             </div>
           </div>
           <div class="two_pic">
             <img src="./imgs/two.png" alt="二等奖">
             <div class="index_begin text-center">
-              <img id="two_btn"  class="zjh2_btn" src="./imgs/button.png" alt="">
-              <span class="zj_haoma zjh12">13511112222</span>
+              <img id="two_btn" class="zjh2_btn" src="./imgs/button.png" alt="">
+              <!-- <span class="zj_haoma zjh12">13511112222</span> -->
+              <div class="zj_haoma">
+                <p class="zjh2">13511112222</p>
+                <img id="chongxinchouyang2_btn" src="./imgs/chongxinchoujiang.png" alt="重新抽奖">
+              </div>
             </div>
           </div>
         </div>
@@ -56,90 +68,106 @@
   <script src="./js/jquery-3.2.1.min.js"></script>
 
   <script>
-      const resolveWinnerData = getData('./data/resolveWinnerData.json')
-      resolveWinnerData.then((data) => {
-        if (!data) return;
+    const resolveWinnerData = getData('./data/resolveWinnerData.json')
+    resolveWinnerData.then((data) => {
+      if (!data) return;
+      setData(data)
+    })
+
+    const req = GetRequest();
+    const id = req['id'];
+    const winner = req['winner']
+    if (id && winner) {
+      sendData(id, winner).then((data) => {
         setData(data)
       })
-  
-      const req = GetRequest();
-      const id = req['id'];
-      const winner = req['winner']
-      if (id && winner) {
-        sendData(id, winner).then((data) => {
-          setData(data)
-        })
-      }
-  
-      const oneBtn = document.getElementById("one_btn")
-        , twoBtn = document.getElementById("two_btn")
-        , threeBtn = document.getElementById("three_btn");
-  
-      oneBtn.addEventListener("click", () => {
-        window.location.href = `./choujiangpage.html?id=1`;
-      });
-      twoBtn.addEventListener("click", () => {
-        window.location.href = `./choujiangpage.html?id=2`;
-      });
-      threeBtn.addEventListener("click", () => {
-        window.location.href = `./choujiangpage.html?id=3`;
-      });
-  
-      function setData(data) {
-        [1, 2, 3].forEach((id) => {
-          const winner = data[id];
-          if (winner) {
-            $(`.zjh${id}`).html(winner).show()
-            $(`.zjh${id}_btn`).hide()
-          }
-        })
-      }
-  
-      function getData(url) {
-        return new Promise((resolve, reject) => {
-          $.ajax({
-            url: url,
-            type: "get",
-            success(result) {
-              resolve(result.data);
-            },
-            error() {
-              reject(`${url}数据下载失败`)
-            }
-          });
-        })
-      }
-  
-      function sendData(id, winner) {
-        return new Promise((resolve, reject) => {
-          $.ajax({
-            type: "get",
-            url: "./data/resolveWinnerData.json",
-            data: { id: id, winner: winner },
-            dataType: "json",
-            success: function (result) {
-              resolve(result.data)
-            },
-            error: function (msg) {
-              alert(msg);
-            }
-          });
-        })
-      }
-  
-      function GetRequest() {
-        var url = location.search; 
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-          var str = url.substr(1);
-          strs = str.split("&");
-          for (var i = 0; i < strs.length; i++) {
-            theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-          }
+    }
+
+    const oneBtn = document.getElementById("one_btn")
+      , twoBtn = document.getElementById("two_btn")
+      , threeBtn = document.getElementById("three_btn");
+
+    const cxcj1_btn=$("#chongxinchoujiang1_btn");
+    const cxcj2_btn=$("#chongxinchoujiang2_btn");
+    const cxcj3_btn=$("#chongxinchoujiang3_btn");
+
+    oneBtn.addEventListener("click", () => {
+      window.location.href = `./choujiangpage.html?id=1`;
+    });
+    twoBtn.addEventListener("click", () => {
+      window.location.href = `./choujiangpage.html?id=2`;
+    });
+    threeBtn.addEventListener("click", () => {
+      window.location.href = `./choujiangpage.html?id=3`;
+    });
+
+    cxcj1_btn.on("click", () => {
+      window.location.href = `./choujiangpage.html?id=1`;
+    });
+    cxcj2_btn.on("click", () => {
+      window.location.href = `./choujiangpage.html?id=2`;
+    });
+    cxcj3_btn.on("click", () => {
+      window.location.href = `./choujiangpage.html?id=3`;
+    });
+
+    function setData(data) {
+      [1, 2, 3].forEach((id) => {
+        const winner = data[id];
+        if (winner) {
+          // $(`.zjh${id}`).html(winner).show()
+          $(".zj_haoma").show();
+          $(`.zjh${id}`).html(winner);
+          $(`.zjh${id}_btn`).hide()
         }
-        return theRequest;
+      })
+    }
+
+    function getData(url) {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: url,
+          type: "get",
+          success(result) {
+            resolve(result.data);
+          },
+          error() {
+            reject(`${url}数据下载失败`)
+          }
+        });
+      })
+    }
+
+    function sendData(id, winner) {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          type: "get",
+          url: "./data/resolveWinnerData.json",
+          data: { id: id, winner: winner },
+          dataType: "json",
+          success: function (result) {
+            resolve(result.data)
+          },
+          error: function (msg) {
+            alert(msg);
+          }
+        });
+      })
+    }
+
+    function GetRequest() {
+      var url = location.search;
+      var theRequest = new Object();
+      if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+        }
       }
-    </script>
+      return theRequest;
+    }
+  </script>
 </body>
 
 </html>
