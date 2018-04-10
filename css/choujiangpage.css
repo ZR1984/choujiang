@@ -17,19 +17,19 @@
     top:1%;
 }
 .qiqiu2{
-    left:30%;
-    top:25%;
+    left:25%;
+    top:20%;
 }
 .qiqiu3{
     left:60%;
     top:2%;
 }
 .laohuji{
-    position: absolute;
-    bottom: 0;
+    position:absolute;
+    bottom:50%;
     left:50%;
-    transform: translate(-50%,0);
-    z-index: 1;
+    transform:translate(-50%,0);
+    z-index:1;
     width:45%;
 }
 
@@ -141,4 +141,8 @@
     position: absolute;
     left:10%;
     top:10%;
+}
+
+.luohuayu_parent{
+    overflow: hidden;
 }

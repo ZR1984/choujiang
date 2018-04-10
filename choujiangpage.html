@@ -19,19 +19,23 @@
                 <div class="bgpic_box">
                     <img src="./imgs/page2/background.jpg" alt="">
                 </div>
-                <div id="luohuayu" class="luohuayu">
-                    <ul>
-                        <li>
-                            <img src="./imgs/page2/luohuayu.png" alt="luohuayu">
-                        </li>
-                        <li>
-                            <img src="./imgs/page2/luohuayu.png" alt="luohuayu">
-                        </li>
-                        <li>
-                            <img src="./imgs/page2/luohuayu.png" alt="luohuayu">
-                        </li>
-                    </ul>
+
+                <div class="luohuayu_parent">
+                    <div id="luohuayu" class="luohuayu">
+                        <ul>
+                            <li>
+                                <img src="./imgs/page2/luohuayu.png" alt="luohuayu">
+                            </li>
+                            <li>
+                                <img src="./imgs/page2/luohuayu.png" alt="luohuayu">
+                            </li>
+                            <li>
+                                <img src="./imgs/page2/luohuayu.png" alt="luohuayu">
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
                 <div class="qiqiu1">
                     <img src="./imgs/page2/1.png" alt="">
                 </div>
@@ -122,6 +126,8 @@
         TweenMax.fromTo(".qiqiu2", 3, { rotationZ: -30, transformOrigin: "left top" }, { rotationZ: 30, repeat: -1, yoyo: true })
         TweenMax.fromTo(".qiqiu3", 3, { rotationZ: -30, transformOrigin: "right top" }, { rotationZ: 30, repeat: -1, yoyo: true })
         //掉落的卡片动画
+        let winHeight = window.innerHeight;
+        $(".luohuayu_parent").height(winHeight);
         let index = -66;
         TweenMax.to('#luohuayu', 5, {
             top: 0,
@@ -149,7 +155,7 @@
             const heightNum = tellistBox.height();
             const liDomHeight = tellistBox.css('height');
             // const timeOverLi = 0.1;
-            let timeOverLi=0.25;
+            let timeOverLi = 0.25;
             const len = telList.length;
             const ylen = -(len - 1) * heightNum;
             switch (btnState) {
@@ -169,18 +175,18 @@
                         y: ylen,
                         // ease: Sine.easeIn,
                         // ease:Sine.easeInOut,
-                        ease:Power0.easeNone,
+                        ease: Power0.easeNone,
                         onUpdate: update,
                         onComplete: complete
                     })
-                    setTimeout(function(){
+                    setTimeout(function () {
                         btnState++;
-                    },3000);
+                    }, 3000);
                     break;
                 case 3:
                     //减速动画
                     btnState++;
-                    timeOverLi=0.03;
+                    timeOverLi = 0.03;
                     progress = 2;
                     tl.progress(1);
                     break;
@@ -201,13 +207,13 @@
 
         function complete() {
             //显示遮罩层，确定抽奖的结果，返回给服务器或者传值到上个页面
-            setTimeout(function(){
+            setTimeout(function () {
                 TweenMax.set('.shade_outerBox', 0, { opacity: 0 })
-            $('.shade_outerBox').show()
-            TweenMax.fromTo('.shade_outerBox', 1, { scale: 0.1 }, { opacity: 1, scale: 1 })
-            shadeTex.html(`恭喜${winner}获得一等奖`);
-            shadeBgpic.children("img").attr("src", `./imgs/page2/zhongjiang_${winnerId}.png`);
-            },1500);
+                $('.shade_outerBox').show()
+                TweenMax.fromTo('.shade_outerBox', 1, { scale: 0.1 }, { opacity: 1, scale: 1 })
+                shadeTex.html(`恭喜${winner}获得一等奖`);
+                shadeBgpic.children("img").attr("src", `./imgs/page2/zhongjiang_${winnerId}.png`);
+            }, 1500);
         }
 
         function getData(url) {
